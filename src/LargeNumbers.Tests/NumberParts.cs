@@ -29,13 +29,13 @@ namespace LargeNumbers.Tests
                 var scale = stack.Count;
                 var scaleLabel = _scales[scale];
 
-                var digit = stack.Pop();
+                var part = stack.Pop();
 
                 foreach (var converter in _converters)
                 {
-                    if (converter.CanConvert(digit))
+                    if (converter.CanConvert(part))
                     {
-                        numberInEnglish.AppendFormat("{0} {1}", converter.Convert(digit), scaleLabel);
+                        numberInEnglish.AppendFormat("{0} {1}", converter.Convert(part), scaleLabel);
                     }
                 }
 
