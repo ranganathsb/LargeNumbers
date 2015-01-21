@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LargeNumbers
+namespace LargeNumbers.Tests
 {
     public class NumberParts
     {
@@ -11,22 +11,17 @@ namespace LargeNumbers
         {
             {1, ""},
             {2, "thousand"},
-            {3, "million"},
-            {4, "billion"}
+            {3, "million"}
         };
 
-        private readonly List<INumberConverter> _converters;
+        private readonly IList<INumberConverter> _converters;
 
-        public NumberParts()
+        public NumberParts(IList<INumberConverter> numberConverters)
         {
-            INumberConverter units = new Units();
-            INumberConverter tens = new Tens(units);
-            INumberConverter hundreds = new Hundreds(tens);
-
-            _converters = new List<INumberConverter> {units, tens, hundreds};
+            _converters = numberConverters;
         }
 
-        public string ProcessThreeDigitParts(Stack<int> stack)
+        public string Process(Stack<int> stack)
         {
             var numberInEnglish = new StringBuilder();
             while (stack.Count > 0)

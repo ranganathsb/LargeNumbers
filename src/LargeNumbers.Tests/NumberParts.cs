@@ -14,15 +14,11 @@ namespace LargeNumbers.Tests
             {3, "million"}
         };
 
-        private readonly List<INumberConverter> _converters;
+        private readonly IList<INumberConverter> _converters;
 
-        public NumberParts()
+        public NumberParts(IList<INumberConverter> numberConverters)
         {
-            INumberConverter units = new Units();
-            INumberConverter tens = new Tens(units);
-            INumberConverter hundreds = new Hundreds(tens);
-
-            _converters = new List<INumberConverter> {units, tens, hundreds};
+            _converters = numberConverters;
         }
 
         public string ProcessThreeDigitParts(Stack<int> stack)
