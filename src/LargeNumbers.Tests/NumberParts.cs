@@ -5,8 +5,6 @@ namespace LargeNumbers.Tests
 {
     public class NumberParts
     {
-        
-
         private readonly Dictionary<int, string> _scales = new Dictionary<int, string>
         {
             {1, ""},
@@ -27,22 +25,25 @@ namespace LargeNumbers.Tests
             while (stack.Count > 0)
             {
                 var scale = stack.Count;
-                var scaleLabel = _scales[scale];
-
                 var part = stack.Pop();
 
-                foreach (var converter in _converters)
-                {
-                    if (converter.CanConvert(part))
-                    {
-                        numberInEnglish.AppendFormat("{0} {1}", converter.Convert(part), scaleLabel);
-                    }
-                }
+                ConvertParts(part, numberInEnglish, scale);
 
                 Combine(stack, scale, numberInEnglish);
             }
 
             return numberInEnglish.ToString().TrimEnd(new[]{',',' '});
+        }
+
+        private void ConvertParts(int part, StringBuilder numberInEnglish, int scale)
+        {
+            foreach (var converter in _converters)
+            {
+                if (converter.CanConvert(part))
+                {
+                    numberInEnglish.AppendFormat("{0} {1}", converter.Convert(part), _scales[scale]);
+                }
+            }
         }
 
         private static void Combine(Stack<int> stack, int threeDigitPart, StringBuilder numberInEnglish)
